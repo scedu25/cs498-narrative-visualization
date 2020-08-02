@@ -37,12 +37,12 @@ async function init(date) {
 	.append('g')
 		.attr('transform','translate('+margin+','+(800+margin)+')')
 	.call(d3.axisBottom(x));
-    var d = new Date(date);
-    var month = parseInt(d.getMonth()) + 1;
-    var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-    if (nextDay.localeCompare('8/1/2020') != 0) {
-        init(nextDay);
-    }
+    // var d = new Date(date);
+    // var month = parseInt(d.getMonth()) + 1;
+    // var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+    // if (nextDay.localeCompare('8/1/2020') != 0) {
+    //     init(nextDay);
+    // }
 }
 </script>
 </body>
