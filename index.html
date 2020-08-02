@@ -54,17 +54,19 @@
 
 	async function update(date) {
 		d3.select('svg')
-			.selectAll('rect')
-			.remove()
-			.exit()
-			.data(data)
-			.enter()
-			.append('rect')
-				.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-				.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-				.attr('width',x.bandwidth())
-				.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
-				.attr('fill',colors[d["Country/Region"]])
+		.append('g')
+			.attr('transform','translate('+margin+','+margin+')')
+		.selectAll('rect')
+		.remove()
+		.exit()
+		.data(data)
+		.enter()
+		.append('rect')
+			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+			.attr('width',x.bandwidth())
+			.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+			.attr('fill',colors[d["Country/Region"]])
 		var d = new Date(date);
 		d.setDate(d.getDate() + 1);
 		var month = parseInt(d.getMonth()) + 1;
