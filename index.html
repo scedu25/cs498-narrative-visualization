@@ -5,71 +5,73 @@
 <svg width=1200 height=1200>
 </svg>
 <script>
-var data;
-const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
-async function init(date) {
-	data = await d3.csv("covid19_data.csv");
+	var data;
+	const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
 	const margin = 200;
-	var x = d3.scaleBand()
-	  .domain(countries)
-	  .range([0, 800]);
-	var y = d3.scaleLog()
-	  .domain([10, 5000000])
-	  .range([800, 0]);
-    var ys = d3.scaleLog()
-      .domain([10, 5000000])
-	  .range([0, 800]);
-	d3.select('svg')
-	.append('g')
-		.attr('transform','translate('+margin+','+margin+')')
-	.selectAll('rect')
-	.data(data)
-	.enter()
-	.append('rect') 
-		.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-		.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-		.attr('width',x.bandwidth())
-        .attr('height',function(d,i) {return ys(d[date])})
-	d3.select('svg')
-	.append('g')
-		.attr('transform','translate('+margin+','+margin+')')
-	.call(d3.axisLeft(y).tickValues([10,100,1000,10000,100000,1000000,5000000]).tickFormat(d3.format('~s')));;
-	d3.select('svg')
-	.append('g')
-		.attr('transform','translate('+margin+','+(800+margin)+')')
-	.call(d3.axisBottom(x));
-    var d = new Date(date);
-	d.setDate(d.getDate() + 1);
-    var month = parseInt(d.getMonth()) + 1;
-    var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-	console.log(nextDay);
-    if (nextDay.localeCompare('8/1/2020') != 0) {
-        update(nextDay);
-    }
-}
-function update(date) {
-	d3.select('svg')
+		var x = d3.scaleBand()
+		.domain(countries)
+		.range([0, 800]);
+		var y = d3.scaleLog()
+		.domain([10, 5000000])
+		.range([800, 0]);
+		// var ys = d3.scaleLog()
+		// .domain([10, 5000000])
+		// .range([0, 800]);
+
+	async function init(date) {
+		data = await d3.csv("covid19_data.csv");
+		d3.select('svg')
+		.append('g')
+			.attr('transform','translate('+margin+','+margin+')')
 		.selectAll('rect')
-		.remove()
-		.exit()
 		.data(data)
 		.enter()
-		.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-		.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-		.attr('width',x.bandwidth())
-        .attr('height',function(d,i) {return ys(d[date])})
-	var d = new Date(date);
-	d.setDate(d.getDate() + 1);
-    var month = parseInt(d.getMonth()) + 1;
-    var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-	console.log(nextDay);
-    if (nextDay.localeCompare('8/1/2020') != 0) {
-        update(nextDay);
-    }
-	else {
-		console.log('8/1/2020 reached')
+		.append('rect') 
+			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+			.attr('width',x.bandwidth())
+			.attr('height',function(d,i) {return 800-y(d[date])})
+		d3.select('svg')
+		.append('g')
+			.attr('transform','translate('+margin+','+margin+')')
+		.call(d3.axisLeft(y).tickValues([10,100,1000,10000,100000,1000000,5000000]).tickFormat(d3.format('~s')));;
+		d3.select('svg')
+		.append('g')
+			.attr('transform','translate('+margin+','+(800+margin)+')')
+		.call(d3.axisBottom(x));
+		var d = new Date(date);
+		d.setDate(d.getDate() + 1);
+		var month = parseInt(d.getMonth()) + 1;
+		var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+		console.log(nextDay);
+		if (nextDay.localeCompare('8/1/2020') != 0) {
+			update(nextDay);
+		}
 	}
-}
+
+	function update(date) {
+		d3.select('svg')
+			.selectAll('rect')
+			.remove()
+			.exit()
+			.data(data)
+			.enter()
+			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+			.attr('width',x.bandwidth())
+			.attr('height',function(d,i) {return 800-y(d[date])})
+		var d = new Date(date);
+		d.setDate(d.getDate() + 1);
+		var month = parseInt(d.getMonth()) + 1;
+		var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+		console.log(nextDay);
+		if (nextDay.localeCompare('8/1/2020') != 0) {
+			update(nextDay);
+		}
+		else {
+			console.log('8/1/2020 reached')
+		}
+	}
 </script>
 </body>
 </html>
