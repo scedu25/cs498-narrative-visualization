@@ -30,7 +30,7 @@
 			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
 			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 			.attr('width',x.bandwidth())
-			.attr('height',function(d,i) {return y(d[date])-800})
+			.attr('height',function(d,i) {return 0-y(d[date])})
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
@@ -60,7 +60,7 @@
 				.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
 				.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 				.attr('width',x.bandwidth())
-				.attr('height',function(d,i) {return y(d[date])-800})
+				.attr('height',function(d,i) {return 0-y(d[date])})
 		var d = new Date(date);
 		d.setDate(d.getDate() + 1);
 		var month = parseInt(d.getMonth()) + 1;
