@@ -1,13 +1,14 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> rect {fill: lightblue; stroke: black;} </style>
-<body onload="init('1/22/2020')">
+<body onload="init('3/15/2020')">
 <svg width=1200 height=1200>
 </svg>
 <script>
+const data = await d3.csv("covid19_data.csv");
+const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
 async function init(date) {
-	const data = await d3.csv("covid19_data.csv");
-    const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
+	// const data = await d3.csv("covid19_data.csv");
 	const margin = 200;
 	var x = d3.scaleBand()
 	  .domain(countries)
@@ -32,7 +33,7 @@ async function init(date) {
 	d3.select('svg')
 	.append('g')
 		.attr('transform','translate('+margin+','+margin+')')
-	.call(d3.axisLeft(y));
+	.call(d3.axisLeft(y).tickValues([10,100,1000,10000,100000,1000000,5000000]).tickFormat(d3.format('~s')));;
 	d3.select('svg')
 	.append('g')
 		.attr('transform','translate('+margin+','+(800+margin)+')')
@@ -65,6 +66,9 @@ function update(date) {
     if (nextDay.localeCompare('8/1/2020') != 0) {
         update(nextDay);
     }
+	else {
+		console.log('8/1/2020 reached')
+	}
 }
 </script>
 </body>
