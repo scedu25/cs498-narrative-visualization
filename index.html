@@ -5,10 +5,10 @@
 <svg width=1200 height=1200>
 </svg>
 <script>
-const data = await d3.csv("covid19_data.csv");
+var data;
 const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
 async function init(date) {
-	// const data = await d3.csv("covid19_data.csv");
+	data = await d3.csv("covid19_data.csv");
 	const margin = 200;
 	var x = d3.scaleBand()
 	  .domain(countries)
