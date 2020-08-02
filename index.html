@@ -32,11 +32,11 @@ async function init(date) {
 	d3.select('svg')
 	.append('g')
 		.attr('transform','translate('+margin+','+margin+')')
-	.call(d3.axisLeft(ys).tickValues([10,20,50,100]).tickFormat(d3.format('~s')));
+	.call(d3.axisLeft(y));
 	d3.select('svg')
 	.append('g')
-		.attr('transform','translate('+margin+','+(200+margin)+')')
-	.call(d3.axisBottom(xs).tickValues([10,20,50,100]).tickFormat(d3.format('~s')));
+		.attr('transform','translate('+margin+','+(800+margin)+')')
+	.call(d3.axisBottom(x));
     var d = new Date(date);
     var month = parseInt(d.getMonth()) + 1;
     var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
