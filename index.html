@@ -2,13 +2,13 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> rect {fill: lightblue; stroke: black;} </style>
 <body onload="init('1/22/2020')">
-<svg width=900 height=900>
+<svg width=1200 height=1200>
 </svg>
 <script>
 async function init(date) {
 	const data = await d3.csv("covid19_data.csv");
     const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
-	margin = 50;
+	margin = 200;
 	var x = d3.scaleBand()
 	  .domain(countries)
 	  .range([0, 800]);
@@ -37,12 +37,12 @@ async function init(date) {
 	.append('g')
 		.attr('transform','translate('+margin+','+(800+margin)+')')
 	.call(d3.axisBottom(x));
-    // var d = new Date(date);
-    // var month = parseInt(d.getMonth()) + 1;
-    // var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-    // if (nextDay.localeCompare('8/1/2020') != 0) {
-    //     init(nextDay);
-    // }
+    var d = new Date(date);
+    var month = parseInt(d.getMonth()) + 1;
+    var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+    if (nextDay.localeCompare('8/1/2020') != 0) {
+        init(nextDay);
+    }
 }
 </script>
 </body>
