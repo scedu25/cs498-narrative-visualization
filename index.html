@@ -7,6 +7,7 @@
 <script>
 	var data;
 	const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
+	const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'MOCCASIN', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
 	const margin = 200;
 		var x = d3.scaleBand()
 		.domain(countries)
@@ -31,10 +32,11 @@
 			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 			.attr('width',x.bandwidth())
 			.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+			.attr('fill',colors[d["Country/Region"]])
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
-		.call(d3.axisLeft(y).tickValues([10,100,1000,10000,100000,1000000,5000000]).tickFormat(d3.format('~s')));
+		.call(d3.axisLeft(y).tickValues([10,1000,10000,100000,500000,5000000]).tickFormat(d3.format('~s')));
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+(800+margin)+')')
@@ -44,7 +46,7 @@
 		var month = parseInt(d.getMonth()) + 1;
 		var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
 		console.log(nextDay);
-		await new Promise(r => setTimeout(r, 300));
+		await new Promise(r => setTimeout(r, 100));
 		if (nextDay.localeCompare('8/1/2020') != 0) {
 			update(nextDay);
 		}
@@ -62,12 +64,13 @@
 				.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 				.attr('width',x.bandwidth())
 				.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+				.attr('fill',colors[d["Country/Region"]])
 		var d = new Date(date);
 		d.setDate(d.getDate() + 1);
 		var month = parseInt(d.getMonth()) + 1;
 		var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
 		console.log(nextDay);
-		await new Promise(r => setTimeout(r, 300));
+		await new Promise(r => setTimeout(r, 100));
 		if (nextDay.localeCompare('8/1/2020') != 0) {
 			update(nextDay);
 		}
