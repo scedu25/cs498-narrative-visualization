@@ -32,7 +32,7 @@
 			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 			.attr('width',x.bandwidth())
 			.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
-			.attr('fill',colors[d["Country/Region"]])
+			.attr('fill',function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
