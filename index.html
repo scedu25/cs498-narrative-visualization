@@ -2,8 +2,9 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> rect {fill: lightblue; stroke: black;} </style>
 <body onload="init('1/22/2020')">
-<svg width=1200 height=1200>
-</svg>
+
+	<svg width=1200 height=1200>
+	</svg>
 <script>
 async function init(date) {
 	const data = await d3.csv("covid19_data.csv");
@@ -12,10 +13,10 @@ async function init(date) {
 	var x = d3.scaleBand()
 	  .domain(countries)
 	  .range([0, 800]);
-	var y = d3.scaleLinear()
+	var y = d3.scaleLog()
 	  .domain([0, 5000000])
 	  .range([800, 0]);
-    var ys = d3.scaleLinear()
+    var ys = d3.scaleLog()
       .domain([0, 5000000])
 	  .range([0, 800]);
 	d3.select('svg')
@@ -38,10 +39,31 @@ async function init(date) {
 		.attr('transform','translate('+margin+','+(800+margin)+')')
 	.call(d3.axisBottom(x));
     var d = new Date(date);
+	d.setDate(d.getDate() + 1);
     var month = parseInt(d.getMonth()) + 1;
     var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+	console.log(nextDay);
     if (nextDay.localeCompare('8/1/2020') != 0) {
-        init(nextDay);
+        update(nextDay);
+    }
+}
+function update(date) {
+	var bars = svg.selectAll('rect')
+		.remove()
+		.exit()
+		.data(data)
+	bars.enter()
+		.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+		.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+		.attr('width',x.bandwidth())
+        .attr('height',function(d,i) {return ys(d[date])})
+	var d = new Date(date);
+	d.setDate(d.getDate() + 1);
+    var month = parseInt(d.getMonth()) + 1;
+    var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+	console.log(nextDay);
+    if (nextDay.localeCompare('8/1/2020') != 0) {
+        update(nextDay);
     }
 }
 </script>
