@@ -30,7 +30,7 @@
 			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
 			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 			.attr('width',x.bandwidth())
-			.attr('height',function(d,i) {return 800-y(d[date])})
+			.attr('height',function(d,i) {return y(d[date])-800})
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
@@ -56,10 +56,11 @@
 			.exit()
 			.data(data)
 			.enter()
-			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-			.attr('width',x.bandwidth())
-			.attr('height',function(d,i) {return 800-y(d[date])})
+			.append('rect')
+				.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+				.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+				.attr('width',x.bandwidth())
+				.attr('height',function(d,i) {return y(d[date])-800})
 		var d = new Date(date);
 		d.setDate(d.getDate() + 1);
 		var month = parseInt(d.getMonth()) + 1;
