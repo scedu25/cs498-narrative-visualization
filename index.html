@@ -2,53 +2,49 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> rect {fill: lightblue; stroke: black;} </style>
 <body onload="init('3/15/2020')">
-<svg width=1200 height=1200>
+<svg width=1600 height=1000>
 </svg>
 <script>
 	var data;
 	const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
 	const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'MOCCASIN', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
 	const margin = 200;
-		var x = d3.scaleBand()
-		.domain(countries)
-		.range([0, 800]);
-		var y = d3.scaleLog()
-		.domain([10, 5000000])
-		.range([800, 0]);
-		var ys = d3.scaleLog()
-		.domain([10, 5000000])
-		.range([0, 800]);
+	var x = d3.scaleBand()
+	.domain(countries)
+	.range([0, 1200]);
+	var y = d3.scaleLog()
+	.domain([10, 5000000])
+	.range([700, 0]);
+	var ys = d3.scaleLog()
+	.domain([10, 5000000])
+	.range([0, 700]);
 
 	async function init(date) {
 		data = await d3.csv("covid19_data.csv");
+		// d3.select('svg')
+		// .append('g')
+		// 	.attr('transform','translate('+margin+','+margin+')')
+		// .selectAll('rect')
+		// .data(data)
+		// .enter()
+		// .append('rect') 
+		// 	.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+		// 	.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+		// 	.attr('width', x.bandwidth()-50)
+		// 	.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+		// 	.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
-		.selectAll('rect')
-		.data(data)
-		.enter()
-		.append('rect') 
-			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-			.attr('width',x.bandwidth())
-			.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
-			.attr('fill',function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
+		.call(d3.axisLeft(y).tickValues([100,1000,10000,100000,1000000,5000000]).tickFormat(d3.format('~s')));
 		d3.select('svg')
 		.append('g')
-			.attr('transform','translate('+margin+','+margin+')')
-		.call(d3.axisLeft(y).tickValues([10,1000,10000,100000,500000,5000000]).tickFormat(d3.format('~s')));
-		d3.select('svg')
-		.append('g')
-			.attr('transform','translate('+margin+','+(800+margin)+')')
+			.attr('transform','translate('+margin+','+(700+margin)+')')
 		.call(d3.axisBottom(x));
-		var d = new Date(date);
-		d.setDate(d.getDate() + 1);
-		var month = parseInt(d.getMonth()) + 1;
-		var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-		console.log(nextDay);
+		console.log(date);
 		await new Promise(r => setTimeout(r, 100));
-		if (nextDay.localeCompare('8/1/2020') != 0) {
-			update(nextDay);
+		if (date.localeCompare('8/1/2020') != 0) {
+			update(date);
 		}
 	}
 
@@ -62,11 +58,11 @@
 		.data(data)
 		.enter()
 		.append('rect')
-			.attr('x',function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-			.attr('y',function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-			.attr('width',x.bandwidth())
-			.attr('height',function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
-			.attr('fill',function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
+			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+			.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+			.attr('width', x.bandwidth()-50)
+			.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+			.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
 		var d = new Date(date);
 		d.setDate(d.getDate() + 1);
 		var month = parseInt(d.getMonth()) + 1;
