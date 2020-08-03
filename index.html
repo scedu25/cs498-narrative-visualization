@@ -12,11 +12,11 @@
 	var x = d3.scaleBand()
 	.domain(countries)
 	.range([0, 1200]);
-	var y = d3.scaleLog()
-	.domain([40, 5000000])
+	var y = d3.scaleLinear()
+	.domain([0, 5000000])
 	.range([700, 0]);
-	var ys = d3.scaleLog()
-	.domain([40, 5000000])
+	var ys = d3.scaleLinear()
+	.domain([0, 5000000])
 	.range([0, 700]);
 
 	async function init(date) {
@@ -36,11 +36,19 @@
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
-		.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')));
+		.call(d3.axisLeft(y))
+		.call(d3.append('text')
+			.attr('x', -margin)
+			.attr('y', 10)
+			.attr('text-anchor', 'end')
+			.text('Number of confirmed COVID-19 cases'));
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+(700+margin)+')')
-		.call(d3.axisBottom(x));
+		.call(d3.axisBottom(x))
+		.call(d3.append('text')
+			.attr('x', width)
+			.attr)
 		console.log(date);
 		await new Promise(r => setTimeout(r, 100));
 		if (date.localeCompare('8/1/2020') != 0) {
@@ -58,9 +66,9 @@
 		.data(data)
 		.enter()
 		.append('rect')
-			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"])+15 : null;})
+			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"])+10 : null;})
 			.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-			.attr('width', x.bandwidth()-30)
+			.attr('width', x.bandwidth()-20)
 			.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
 			.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
 		var d = new Date(date);
