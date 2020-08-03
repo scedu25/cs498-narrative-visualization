@@ -67,9 +67,7 @@
 		.select('g')
 		.selectAll('rect')
 		.remove()
-		.exit();
-		d3.select('svg')
-		.select('g')
+		.exit()
 		.data(data)
 		.enter()
 		.append('rect')
