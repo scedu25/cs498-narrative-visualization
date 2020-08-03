@@ -14,11 +14,11 @@
 	var x = d3.scaleBand()
 	.domain(countries)
 	.range([0, 1200]);
-	var y = d3.scaleLinear()
-	.domain([0, 5000000])
+	var y = d3.scaleLog()
+	.domain([40, 5000000])
 	.range([700, 0]);
-	var ys = d3.scaleLinear()
-	.domain([0, 5000000])
+	var ys = d3.scaleLog()
+	.domain([40, 5000000])
 	.range([0, 700]);
 
 	async function init(date) {
@@ -38,10 +38,11 @@
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
-		.call(d3.axisLeft(y))
+		.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
 		.append('text')
 			.attr('x', 0)
 			.attr('y', 10)
+			.attr('fill', 'black')
 			.attr('text-anchor', 'end')
 			.text('Number of confirmed COVID-19 cases');
 		d3.select('svg')
@@ -49,8 +50,9 @@
 			.attr('transform','translate('+margin+','+(700+margin)+')')
 		.call(d3.axisBottom(x))
 		.append('text')
-			.attr('x', width)
-			.attr('y', height-margin)
+			.attr('x', 1200)
+			.attr('y', 0)
+			.attr('fill', 'black')
 			.attr('text-anchor', 'end')
 			.text('Affected country');
 		console.log(date);
