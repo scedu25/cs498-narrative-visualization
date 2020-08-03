@@ -2,94 +2,97 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> rect {fill: lightblue; opacity: 0.7; stroke: black;} </style>
 <body onload="init('3/15/2020')">
-	<h1>Confirmed COVID-19 Cases in Countries with Top Ten Highest Counts</h1>
-	<svg class='chart' width=1600 height=900>
-	</svg>
-	<script>
-		const width = 1600;
-		const height = 900;
-		var data;
-		const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
-		const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'LAVENDER', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
-		const margin = 150;
-		var x = d3.scaleBand()
-		.domain(countries)
-		.range([0, 1200]);
-		var y = d3.scaleLog()
-		.domain([40, 5000000])
-		.range([700, 0]);
-		var ys = d3.scaleLog()
-		.domain([40, 5000000])
-		.range([0, 700]);
+	<div>
+		<h2 style="text-align:center">Confirmed COVID-19 Cases in Countries with Top Ten Highest Counts</h2>
+		<svg class='chart' width=1600 height=900>
+		</svg>
+		<script>
+			const width = 1600;
+			const height = 900;
+			var data;
+			const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
+			const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'LAVENDER', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
+			const margin = 150;
+			var x = d3.scaleBand()
+			.domain(countries)
+			.range([0, 1200]);
+			var y = d3.scaleLog()
+			.domain([40, 5000000])
+			.range([700, 0]);
+			var ys = d3.scaleLog()
+			.domain([40, 5000000])
+			.range([0, 700]);
 
-		async function init(date) {
-			data = await d3.csv("covid19_data.csv");
-			d3.select('svg')
-			.append('g')
-				.attr('transform','translate('+margin+','+margin+')')
-			// .selectAll('rect')
-			// .data(data)
-			// .enter()
-			// .append('rect') 
-			// 	.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
-			// 	.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-			// 	.attr('width', x.bandwidth()-50)
-			// 	.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
-			// 	.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
-			d3.select('svg')
-			.append('g')
-				.attr('transform','translate('+margin+','+margin+')')
-			.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
-			.append('text')
-				.attr('x', 100)
-				.attr('y', -50)
-				.attr('fill', 'black')
-				.attr('text-anchor', 'end')
-				.text('Number of confirmed\n COVID-19 cases');
-			d3.select('svg')
-			.append('g')
-				.attr('transform','translate('+margin+','+(700+margin)+')')
-			.call(d3.axisBottom(x))
-			.append('text')
-				.attr('x', 600)
-				.attr('y', 50)
-				.attr('fill', 'black')
-				.attr('text-anchor', 'end')
-				.text('Affected country');
-			console.log(date);
-			await new Promise(r => setTimeout(r, 100));
-			if (date.localeCompare('8/1/2020') != 0) {
-				update(date);
+			async function init(date) {
+				data = await d3.csv("covid19_data.csv");
+				d3.select('svg')
+				.append('g')
+					.attr('transform','translate('+margin+','+margin+')')
+				// .selectAll('rect')
+				// .data(data)
+				// .enter()
+				// .append('rect') 
+				// 	.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+				// 	.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+				// 	.attr('width', x.bandwidth()-50)
+				// 	.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+				// 	.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
+				d3.select('svg')
+				.append('g')
+					.attr('transform','translate('+margin+','+margin+')')
+				.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
+				.append('text')
+					.attr('x', -30)
+					.attr('y', 450)
+					.attr('fill', 'black')
+					.attr('text-anchor', 'middle')
+					.attr('transform', 'rotate(270)')
+					.text('Number of confirmed\n COVID-19 cases');
+				d3.select('svg')
+				.append('g')
+					.attr('transform','translate('+margin+','+(700+margin)+')')
+				.call(d3.axisBottom(x))
+				.append('text')
+					.attr('x', 600)
+					.attr('y', 30)
+					.attr('fill', 'black')
+					.attr('text-anchor', 'end')
+					.text('Affected country');
+				console.log(date);
+				await new Promise(r => setTimeout(r, 100));
+				if (date.localeCompare('8/1/2020') != 0) {
+					update(date);
+				}
 			}
-		}
 
-		async function update(date) {
-			d3.select('svg')
-			.select('g')
-			.selectAll('rect')
-			.remove()
-			.exit()
-			.data(data)
-			.enter()
-			.append('rect')
-				.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"])+10 : null;})
-				.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-				.attr('width', x.bandwidth()-20)
-				.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
-				.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
-			var d = new Date(date);
-			d.setDate(d.getDate() + 1);
-			var month = parseInt(d.getMonth()) + 1;
-			var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-			console.log(nextDay);
-			await new Promise(r => setTimeout(r, 100));
-			if (nextDay.localeCompare('8/1/2020') != 0) {
-				update(nextDay);
+			async function update(date) {
+				d3.select('svg')
+				.select('g')
+				.selectAll('rect')
+				.remove()
+				.exit()
+				.data(data)
+				.enter()
+				.append('rect')
+					.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"])+10 : null;})
+					.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+					.attr('width', x.bandwidth()-20)
+					.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+					.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
+				var d = new Date(date);
+				d.setDate(d.getDate() + 1);
+				var month = parseInt(d.getMonth()) + 1;
+				var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
+				console.log(nextDay);
+				await new Promise(r => setTimeout(r, 100));
+				if (nextDay.localeCompare('8/1/2020') != 0) {
+					update(nextDay);
+				}
+				else {
+					console.log('8/1/2020 reached')
+				}
 			}
-			else {
-				console.log('8/1/2020 reached')
-			}
-		}
-	</script>
+		</script>
+	</div>
 </body>
 </html>
