@@ -58,7 +58,7 @@
 		.data(data)
 		.enter()
 		.append('rect')
-			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]+15) : null;})
+			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"])+15 : null;})
 			.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
 			.attr('width', x.bandwidth()-30)
 			.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
