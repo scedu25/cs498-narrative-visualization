@@ -3,7 +3,7 @@
 <style> rect {fill: lightblue; opacity: 0.7; stroke: black;} </style>
 <body onload="init('3/15/2020')">
 	<div>
-		<h2 style="text-align:center">Confirmed COVID-19 Cases in Countries with Top Ten Highest Counts</h2>
+		<h2 style="text-align:center">Confirmed COVID-19 Case History in Countries with Highest Current Totals</h2>
 		<svg class='chart' width=1600 height=900>
 		</svg>
 		<script>
@@ -12,7 +12,7 @@
 			var data;
 			const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
 			const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'LAVENDER', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
-			const margin = 150;
+			const margin = 75;
 			var x = d3.scaleBand()
 			.domain(countries)
 			.range([0, 1200]);
@@ -42,7 +42,7 @@
 					.attr('transform','translate('+margin+','+margin+')')
 				.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
 				.append('text')
-					.attr('x', -30)
+					.attr('x', 0)
 					.attr('y', 450)
 					.attr('fill', 'black')
 					.attr('text-anchor', 'middle')
@@ -54,7 +54,7 @@
 				.call(d3.axisBottom(x))
 				.append('text')
 					.attr('x', 600)
-					.attr('y', 30)
+					.attr('y', 45)
 					.attr('fill', 'black')
 					.attr('text-anchor', 'end')
 					.text('Affected country');
