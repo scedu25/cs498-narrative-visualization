@@ -41,7 +41,7 @@
 		.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
 		.append('text')
 			.attr('x', 0)
-			.attr('y', -margin)
+			.attr('y', 0)
 			.attr('fill', 'black')
 			.attr('text-anchor', 'end')
 			.text('Number of confirmed\n COVID-19 cases');
@@ -50,7 +50,7 @@
 			.attr('transform','translate('+margin+','+(700+margin)+')')
 		.call(d3.axisBottom(x))
 		.append('text')
-			.attr('x', width)
+			.attr('x', 1350)
 			.attr('y', 0)
 			.attr('fill', 'black')
 			.attr('text-anchor', 'end')
