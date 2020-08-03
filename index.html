@@ -37,20 +37,20 @@
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
 		.call(d3.axisLeft(y))
-		.call(d3.append('text')
+		.append('text')
 			.attr('x', 0)
 			.attr('y', 10)
 			.attr('text-anchor', 'end')
-			.text('Number of confirmed COVID-19 cases'));
+			.text('Number of confirmed COVID-19 cases');
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+(700+margin)+')')
 		.call(d3.axisBottom(x))
-		.call(d3.append('text')
+		.append('text')
 			.attr('x', width)
 			.attr('y', height-margin)
 			.attr('text-anchor', 'end')
-			.text('Affected country'))
+			.text('Affected country');
 		console.log(date);
 		await new Promise(r => setTimeout(r, 100));
 		if (date.localeCompare('8/1/2020') != 0) {
