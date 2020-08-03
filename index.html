@@ -38,7 +38,7 @@
 			.attr('transform','translate('+margin+','+margin+')')
 		.call(d3.axisLeft(y))
 		.call(d3.append('text')
-			.attr('x', -margin)
+			.attr('x', 0)
 			.attr('y', 10)
 			.attr('text-anchor', 'end')
 			.text('Number of confirmed COVID-19 cases'));
@@ -48,7 +48,9 @@
 		.call(d3.axisBottom(x))
 		.call(d3.append('text')
 			.attr('x', width)
-			.attr)
+			.attr('y', height-margin)
+			.attr('text-anchor', 'end')
+			.text('Affected country'))
 		console.log(date);
 		await new Promise(r => setTimeout(r, 100));
 		if (date.localeCompare('8/1/2020') != 0) {
