@@ -41,16 +41,16 @@
 		.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
 		.append('text')
 			.attr('x', 0)
-			.attr('y', 10)
+			.attr('y', -margin)
 			.attr('fill', 'black')
 			.attr('text-anchor', 'end')
-			.text('Number of confirmed COVID-19 cases');
+			.text('Number of confirmed\n COVID-19 cases');
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+(700+margin)+')')
 		.call(d3.axisBottom(x))
 		.append('text')
-			.attr('x', 1200)
+			.attr('x', width)
 			.attr('y', 0)
 			.attr('fill', 'black')
 			.attr('text-anchor', 'end')
@@ -64,11 +64,12 @@
 
 	async function update(date) {
 		d3.select('svg')
-		.append('g')
-			.attr('transform','translate('+margin+','+margin+')')
 		.selectAll('rect')
 		.remove()
-		.exit()
+		.exit();
+		d3.select('svg')
+		.append('g')
+			.attr('transform','translate('+margin+','+margin+')')
 		.data(data)
 		.enter()
 		.append('rect')
