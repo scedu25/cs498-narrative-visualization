@@ -2,21 +2,21 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> rect {fill: lightblue; stroke: black;} </style>
 <body onload="init('3/15/2020')">
-<svg width=1600 height=1000>
+<svg width=1600 height=900>
 </svg>
 <script>
 	var data;
 	const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
-	const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'MOCCASIN', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
-	const margin = 200;
+	const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'LAVENDER', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
+	const margin = 150;
 	var x = d3.scaleBand()
 	.domain(countries)
 	.range([0, 1200]);
 	var y = d3.scaleLog()
-	.domain([10, 5000000])
+	.domain([40, 5000000])
 	.range([700, 0]);
 	var ys = d3.scaleLog()
-	.domain([10, 5000000])
+	.domain([40, 5000000])
 	.range([0, 700]);
 
 	async function init(date) {
@@ -36,7 +36,7 @@
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+margin+')')
-		.call(d3.axisLeft(y).tickValues([100,1000,10000,100000,1000000,5000000]).tickFormat(d3.format('~s')));
+		.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')));
 		d3.select('svg')
 		.append('g')
 			.attr('transform','translate('+margin+','+(700+margin)+')')
@@ -58,9 +58,9 @@
 		.data(data)
 		.enter()
 		.append('rect')
-			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]) : null;})
+			.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"]+15) : null;})
 			.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
-			.attr('width', x.bandwidth()-50)
+			.attr('width', x.bandwidth()-30)
 			.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
 			.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
 		var d = new Date(date);
