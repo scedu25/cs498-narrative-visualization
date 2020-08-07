@@ -4,6 +4,13 @@
 <body onload="init('3/15/2020')">
 	<div>
 		<h2 style="text-align:center">Confirmed COVID-19 Case History in Countries with Highest Current Totals</h2>
+		<p>
+			<label for="date" 
+				style="display: inline-block; width: 240px; text-align: right">
+				date = <span id="date-value">…</span>
+			</label>
+			<input type="range" min="0" max="360" id="date">
+		</p>
 		<svg class='chart' width=1600 height=900>
 		</svg>
 		<script>
@@ -16,15 +23,22 @@
 			var x = d3.scaleBand()
 			.domain(countries)
 			.range([0, 1200]);
-			var y = d3.scaleLog()
+			var log_y = d3.scaleLog()
 			.domain([40, 5000000])
 			.range([700, 0]);
-			var ys = d3.scaleLog()
+			var log_ys = d3.scaleLog()
 			.domain([40, 5000000])
+			.range([0, 700]);
+			var lin_y = d3.scaleLinear()
+			.domain([0, 5000000])
+			.range([700, 0]);
+			var lin_ys = d3.scaleLinear()
+			.domain([0, 5000000])
 			.range([0, 700]);
 
 			async function init(date) {
 				data = await d3.csv("covid19_data.csv");
+				d3.select('#date').on('input', function() {update(+this.value);})
 				d3.select('svg')
 				.append('g')
 					.attr('transform','translate('+margin+','+margin+')')
@@ -75,9 +89,9 @@
 				.enter()
 				.append('rect')
 					.attr('x', function(d,i) {return countries.includes(d["Country/Region"]) ? x(d["Country/Region"])+10 : null;})
-					.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? y(d[date]) : null;})
+					.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? log_y(d[date]) : null;})
 					.attr('width', x.bandwidth()-20)
-					.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? ys(d[date]) : null;})
+					.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? log_ys(d[date]) : null;})
 					.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
 				var d = new Date(date);
 				d.setDate(d.getDate() + 1);
