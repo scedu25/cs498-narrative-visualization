@@ -4,9 +4,9 @@
 <body onload="init('3/15/2020')">
 	<div>
 		<h2 style="text-align:center">Confirmed COVID-19 Case History in Countries with Highest Current Totals</h2>
-		<p id='slider'>
+		<p style="display: none;" id='slider'>
 			<label for="date" 
-				style="display: none; width: 240px; text-align: right">
+				style="display: inline-block; width: 240px; text-align: right">
 				date = <span id="date-value">…</span>
 			</label>
 			<input type="range" min="0" max="140" id="date">
@@ -104,7 +104,7 @@
 				}
 				else {
 					var slider = document.getElementById('slider');
-					slider.style.display = 'inline-block';
+					slider.style.display = 'block';
 					d3.select('#date-value').text(date);
 					d3.select('#date').property('value', date);
 					console.log('8/1/2020 reached')
