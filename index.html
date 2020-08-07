@@ -38,10 +38,10 @@
 
 			async function init(date) {
 				data = await d3.csv("covid19_data.csv");
-				d3.select('#date').on('input', function() {update(+this.value);})
+				d3.select('#date').on('input', function() {update(+this.value);});
 				d3.select('svg')
 				.append('g')
-					.attr('transform','translate('+margin+','+margin+')')
+					.attr('transform','translate('+margin+','+margin+')');
 				// .selectAll('rect')
 				// .data(data)
 				// .enter()
@@ -80,6 +80,7 @@
 			}
 
 			async function update(date) {
+				d3.select('#date').on('input', function() {update(+this.value);});
 				d3.select('svg')
 				.select('g')
 				.selectAll('rect')
@@ -92,7 +93,7 @@
 					.attr('y', function(d,i) {return countries.includes(d["Country/Region"]) ? log_y(d[date]) : null;})
 					.attr('width', x.bandwidth()-20)
 					.attr('height', function(d,i) {return countries.includes(d["Country/Region"]) ? log_ys(d[date]) : null;})
-					.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;})
+					.style('fill', function(d,i) {return countries.includes(d["Country/Region"]) ? colors[d["Country/Region"]] : null;});
 				var d = new Date(date);
 				d.setDate(d.getDate() + 1);
 				var month = parseInt(d.getMonth()) + 1;
