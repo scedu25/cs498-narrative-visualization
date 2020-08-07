@@ -4,7 +4,7 @@
 <body onload="init('3/15/2020')">
 	<div>
 		<h2 style="text-align:center">Confirmed COVID-19 Case History in Countries with Highest Current Totals</h2>
-		<p>
+		<p id='slider'>
 			<label for="date" 
 				style="display: inline-block; width: 240px; text-align: right">
 				date = <span id="date-value">…</span>
@@ -54,7 +54,7 @@
 				d3.select('svg')
 				.append('g')
 					.attr('transform','translate('+margin+','+margin+')')
-				.call(d3.axisLeft(y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
+				.call(d3.axisLeft(log_y).tickValues([50,500,5000,50000,500000,5000000]).tickFormat(d3.format('~s')))
 				.append('text')
 					.attr('x', 0)
 					.attr('y', 450)
@@ -103,6 +103,8 @@
 					update(nextDay);
 				}
 				else {
+					var slider = document.getElementById('slider');
+					slider.style.display = 'inline-block';
 					console.log('8/1/2020 reached')
 				}
 			}
