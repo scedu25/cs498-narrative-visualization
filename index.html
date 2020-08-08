@@ -41,8 +41,6 @@
 
 			async function init(date) {
 				data = await d3.csv("covid19_data.csv");
-				d3.select('#date-value').text(date);
-				d3.select('#date').property('value', dateValue(date));
 				d3.select('svg')
 				.append('g')
 					.attr('transform','translate('+margin+','+margin+')');
@@ -76,7 +74,6 @@
 					.attr('fill', 'black')
 					.attr('text-anchor', 'end')
 					.text('Affected country');
-				// console.log(date);
 				await new Promise(r => setTimeout(r, 100));
 				if (date.localeCompare('8/1/2020') != 0) {
 					flag = false;
@@ -87,6 +84,8 @@
 			d3.select('#date').on('input', function() {update(dateFromValue(+this.value));});
 
 			async function update(date) {
+				d3.select('#date-value').text(date);
+				d3.select('#date').property('value', dateValue(date));
 				d3.select('svg')
 				.select('g')
 				.selectAll('rect')
@@ -104,9 +103,6 @@
 				d.setDate(d.getDate() + 1);
 				var month = parseInt(d.getMonth()) + 1;
 				var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
-				// console.log(nextDay);
-				d3.select('#date-value').text(nextDay);
-				d3.select('#date').property('value', dateValue(nextDay));
 				await new Promise(r => setTimeout(r, 100));
 				if (nextDay.localeCompare('8/1/2020') != 0 && flag == false) {
 					update(nextDay);
@@ -115,6 +111,8 @@
 					flag = true;
 					var date_slider = document.getElementById('date');
 					date_slider.style.display = 'inline-block';
+					d3.select('#date-value').text(nextDay);
+					d3.select('#date').property('value', dateValue(nextDay));
 					console.log('8/1/2020 reached')
 				}
 			}
