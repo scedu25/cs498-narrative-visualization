@@ -104,15 +104,13 @@
 				var month = parseInt(d.getMonth()) + 1;
 				var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
 				await new Promise(r => setTimeout(r, 100));
-				if (nextDay.localeCompare('8/1/2020') != 0 && flag == false) {
+				if (date.localeCompare('8/1/2020') != 0 && flag == false) {
 					update(nextDay);
 				}
 				else {
 					flag = true;
 					var date_slider = document.getElementById('date');
 					date_slider.style.display = 'inline-block';
-					d3.select('#date-value').text(nextDay);
-					d3.select('#date').property('value', dateValue(nextDay));
 					console.log('8/1/2020 reached')
 				}
 			}
