@@ -11,7 +11,7 @@
 				style="display: inline-block; width: 240px; text-align: right">
 				date = <span id="date-value">…</span>
 			</label>
-			<input type="range" min="1" max="154" id="date">
+			<input type="range" min="0" max="139" id="date">
 		</p>
 		<svg class='chart' width=1600 height=900>
 		</svg>
@@ -123,24 +123,26 @@
 				const month = dateString[0];
 				const day = dateString[1];
 				const year = dateString[2];
+				var d;
 				if (month == 3) {
-					return parseInt(day);
+					d = parseInt(day);
 				}
 				else if (month == 4) {
-					return parseInt(day) + 31;
+					d = parseInt(day) + 31;
 				}
 				else if (month == 5) {
-					return parseInt(day) + 61;
+					d = parseInt(day) + 61;
 				}
 				else if (month == 6) {
-					return parseInt(day) + 92;
+					d = parseInt(day) + 92;
 				}
 				else if (month == 7) {
-					return parseInt(day) + 122;
+					d = parseInt(day) + 122;
 				}
 				else if (month == 8) {
-					return parseInt(day) + 153;
+					d = parseInt(day) + 153;
 				}
+				return d - 15;
 			}
 
 			function dateFromValue(value) {
