@@ -19,6 +19,7 @@
 			const width = 1600;
 			const height = 900;
 			var data;
+			var flag;
 			const countries = ['US', 'Brazil', 'India', 'Russia', 'South Africa', 'Mexico', 'Peru', 'Chile', 'Iran', 'Colombia'];
 			const colors = {'US': 'FIREBRICK', 'Brazil': 'CORAL', 'India': 'LAVENDER', 'Russia': 'PLUM', 'South Africa': 'SLATEBLUE', 'Mexico': 'LIMEGREEN', 'Peru': 'TEAL', 'Chile': 'ROYALBLUE', 'Iran': 'ROSYBROWN', 'Colombia': 'PALEVIOLETRED'}
 			const margin = 75;
@@ -77,6 +78,7 @@
 				console.log(date);
 				await new Promise(r => setTimeout(r, 100));
 				if (date.localeCompare('8/1/2020') != 0) {
+					flag = false;
 					update(date);
 				}
 			}
@@ -105,10 +107,11 @@
 				var nextDay = month + "/" + d.getDate() + "/" + d.getFullYear();
 				console.log(nextDay);
 				await new Promise(r => setTimeout(r, 100));
-				if (nextDay.localeCompare('8/1/2020') != 0) {
+				if (nextDay.localeCompare('8/1/2020') != 0 && flag == false) {
 					update(nextDay);
 				}
 				else {
+					flag = true;
 					var slider = document.getElementById('slider');
 					slider.style.display = 'block';
 					console.log('8/1/2020 reached')
